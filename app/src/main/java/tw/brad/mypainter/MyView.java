@@ -1,8 +1,12 @@
 package tw.brad.mypainter;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -11,6 +15,26 @@ import android.view.View;
 public class MyView extends View {
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setBackgroundColor(Color.BLUE);
+
+//        setOnClickListener(new MyClickListener());
+
     }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Paint p = new Paint();
+        p.setColor(Color.BLUE);
+        p.setStrokeWidth(4);
+        canvas.drawLine(0,0,100,100,p);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float ex = event.getX(), ey = event.getY();
+        Log.d("brad", "onTouchEvent:" + ex + " x " + ey);
+
+        return true;
+    }
+
 }

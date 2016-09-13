@@ -18,6 +18,7 @@
             />
     </LinearLayout>
     <tw.brad.mypainter.MyView
+        android:id="@+id/myView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
