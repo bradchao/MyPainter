@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -38,7 +39,14 @@ public class MyView extends View {
         super.onDraw(canvas);
         if (!isInit) init();
 
+
         Bitmap bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
+        float ballW = viewW / 8f, ballH = ballW;
+        Matrix matrix = new Matrix();
+        matrix.postScale(ballW/bmpBall.getWidth(), ballH/bmpBall.getHeight());
+        bmpBall = Bitmap.createBitmap(bmpBall,0,0,bmpBall.getWidth(),bmpBall.getHeight(),matrix, false);
+
+
         canvas.drawBitmap(bmpBall, 0,0,null);
 
 
