@@ -28,7 +28,10 @@ public class MyView extends View {
         Paint p = new Paint();
         p.setColor(Color.BLUE);
         p.setStrokeWidth(4);
-        canvas.drawLine(0,0,100,100,p);
+        for (int i=1; i<line.size(); i++) {
+            canvas.drawLine(line.get(i-1).get("x"), line.get(i-1).get("y"),
+                    line.get(i).get("x"), line.get(i).get("y"), p);
+        }
     }
 
     @Override
