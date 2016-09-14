@@ -15,9 +15,6 @@ import android.view.View;
 public class MyView extends View {
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-//        setOnClickListener(new MyClickListener());
-
     }
 
     @Override
@@ -32,8 +29,11 @@ public class MyView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float ex = event.getX(), ey = event.getY();
-        Log.d("brad", "onTouchEvent:" + ex + " x " + ey);
-
+        if (event.getAction() == MotionEvent.ACTION_DOWN){
+            Log.d("brad", "Down:" + ex + " x " + ey);
+        }else if (event.getAction() == MotionEvent.ACTION_MOVE){
+            Log.d("brad", "Move:" + ex + " x " + ey);
+        }
         return true;
     }
 
