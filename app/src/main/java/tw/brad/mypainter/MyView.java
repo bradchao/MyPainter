@@ -20,6 +20,8 @@ import java.util.LinkedList;
 public class MyView extends View {
     private LinkedList<LinkedList<HashMap<String,Float>>> lines;
     private Resources res;
+    private boolean isInit;
+    private int viewW, viewH;
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,10 +29,14 @@ public class MyView extends View {
         res = context.getResources();
     }
 
+    private void init(){
+        viewW = getWidth(); viewH = getHeight();
+        isInit = true;
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        if (!isInit) init();
 
         Bitmap bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
         canvas.drawBitmap(bmpBall, 0,0,null);
