@@ -14,6 +14,8 @@ import android.view.View;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by brad on 2016/9/13.
@@ -25,23 +27,32 @@ public class MyView extends View {
     private int viewW, viewH;
     private Bitmap bmpBall, bmpBg;
     private Matrix matrix;
+    private Timer timer;
+    private float ballX, ballY, ballW, ballH, dx, dy;
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         lines = new LinkedList<>();
         res = context.getResources();
         matrix = new Matrix();
+        timer = new Timer();
     }
 
+    Timer getTimer(){return timer;}
     private void init(){
         viewW = getWidth(); viewH = getHeight();
-        float ballW = viewW / 8f, ballH = ballW;
+        ballW = viewW / 8f; ballH = ballW;
 
         bmpBg = BitmapFactory.decodeResource(res, R.drawable.bg);
         bmpBg = resizeBitmap(bmpBg, viewW,viewH);
 
         bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
         bmpBall = resizeBitmap(bmpBall, ballW,ballH);
+
+        dx = dy = 10;
+
+        timer.schedule(new RefreshView(), 0, 40);
+        timer.schedule(new BallTask(), 1000, 100);
 
         isInit = true;
     }
@@ -60,7 +71,7 @@ public class MyView extends View {
 
         canvas.drawBitmap(bmpBg, 0,0,null);
 
-        canvas.drawBitmap(bmpBall, 0,0,null);
+        canvas.drawBitmap(bmpBall, ballX, ballY,null);
 
 
         Paint p = new Paint();
@@ -71,6 +82,22 @@ public class MyView extends View {
                 canvas.drawLine(line.get(i - 1).get("x"), line.get(i - 1).get("y"),
                         line.get(i).get("x"), line.get(i).get("y"), p);
             }
+        }
+    }
+
+    private class RefreshView extends TimerTask {
+        @Override
+        public void run() {
+            //invalidate();
+            postInvalidate();
+        }
+    }
+    private class BallTask extends TimerTask {
+        @Override
+        public void run() {
+            if (ballX<0 || ballX + ballW > viewW) dx *= -1;
+            if (ballY<0 || ballY + ballH > viewH) dy *= -1;
+            ballX += dx; ballY += dy;
         }
     }
 

@@ -14,4 +14,10 @@ public class MainActivity extends AppCompatActivity {
         myView = (MyView)findViewById(R.id.myView);
 
     }
+
+    @Override
+    public void finish() {
+        myView.getTimer().cancel();
+        super.finish();
+    }
 }
