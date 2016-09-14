@@ -23,28 +23,39 @@ public class MyView extends View {
     private Resources res;
     private boolean isInit;
     private int viewW, viewH;
+    private Bitmap bmpBall;
+    private Matrix matrix;
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         lines = new LinkedList<>();
         res = context.getResources();
+        matrix = new Matrix();
     }
 
     private void init(){
         viewW = getWidth(); viewH = getHeight();
+        float ballW = viewW / 8f, ballH = ballW;
+
+        bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
+        bmpBall = resizeBitmap(bmpBall, ballW,ballH);
+
         isInit = true;
     }
+
+    private Bitmap resizeBitmap(Bitmap src, float newW, float newH){
+        matrix.reset();
+        matrix.postScale(newW/src.getWidth(), newH/src.getHeight());
+        bmpBall = Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix, false);
+        return bmpBall;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (!isInit) init();
 
 
-        Bitmap bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
-        float ballW = viewW / 8f, ballH = ballW;
-        Matrix matrix = new Matrix();
-        matrix.postScale(ballW/bmpBall.getWidth(), ballH/bmpBall.getHeight());
-        bmpBall = Bitmap.createBitmap(bmpBall,0,0,bmpBall.getWidth(),bmpBall.getHeight(),matrix, false);
 
 
         canvas.drawBitmap(bmpBall, 0,0,null);
