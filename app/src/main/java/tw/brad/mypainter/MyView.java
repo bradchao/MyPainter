@@ -8,12 +8,18 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 /**
  * Created by brad on 2016/9/13.
  */
 public class MyView extends View {
+    private LinkedList<HashMap<String,Float>> line;
+
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        line = new LinkedList<>();
     }
 
     @Override
@@ -37,10 +43,18 @@ public class MyView extends View {
     }
 
     private void doTouchDown(float x, float y){
-
+        HashMap<String,Float> point =
+                new HashMap<>();
+        point.put("x", x); point.put("y", y);
+        line.add(point);
+        invalidate();
     }
     private void doTouchMove(float x, float y){
-
+        HashMap<String,Float> point =
+                new HashMap<>();
+        point.put("x", x); point.put("y", y);
+        line.add(point);
+        invalidate();
     }
 
 
