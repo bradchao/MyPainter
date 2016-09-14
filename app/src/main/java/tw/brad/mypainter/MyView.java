@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -30,11 +29,19 @@ public class MyView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float ex = event.getX(), ey = event.getY();
         if (event.getAction() == MotionEvent.ACTION_DOWN){
-            Log.d("brad", "Down:" + ex + " x " + ey);
+            doTouchDown(ex, ey);
         }else if (event.getAction() == MotionEvent.ACTION_MOVE){
-            Log.d("brad", "Move:" + ex + " x " + ey);
+            doTouchMove(ex, ey);
         }
         return true;
     }
+
+    private void doTouchDown(float x, float y){
+
+    }
+    private void doTouchMove(float x, float y){
+
+    }
+
 
 }
