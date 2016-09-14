@@ -1,6 +1,9 @@
 package tw.brad.mypainter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,15 +19,23 @@ import java.util.LinkedList;
  */
 public class MyView extends View {
     private LinkedList<LinkedList<HashMap<String,Float>>> lines;
+    private Resources res;
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         lines = new LinkedList<>();
+        res = context.getResources();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+
+        Bitmap bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
+        canvas.drawBitmap(bmpBall, 0,0,null);
+
+
         Paint p = new Paint();
         p.setColor(Color.BLUE);
         p.setStrokeWidth(4);
