@@ -23,7 +23,7 @@ public class MyView extends View {
     private Resources res;
     private boolean isInit;
     private int viewW, viewH;
-    private Bitmap bmpBall;
+    private Bitmap bmpBall, bmpBg;
     private Matrix matrix;
 
     public MyView(Context context, AttributeSet attrs) {
@@ -36,6 +36,9 @@ public class MyView extends View {
     private void init(){
         viewW = getWidth(); viewH = getHeight();
         float ballW = viewW / 8f, ballH = ballW;
+
+        bmpBg = BitmapFactory.decodeResource(res, R.drawable.bg);
+        bmpBg = resizeBitmap(bmpBg, viewW,viewH);
 
         bmpBall = BitmapFactory.decodeResource(res, R.drawable.ball);
         bmpBall = resizeBitmap(bmpBall, ballW,ballH);
@@ -55,8 +58,7 @@ public class MyView extends View {
         super.onDraw(canvas);
         if (!isInit) init();
 
-
-
+        canvas.drawBitmap(bmpBg, 0,0,null);
 
         canvas.drawBitmap(bmpBall, 0,0,null);
 
