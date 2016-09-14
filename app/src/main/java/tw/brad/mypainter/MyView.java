@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -29,6 +31,7 @@ public class MyView extends View {
     private Matrix matrix;
     private Timer timer;
     private float ballX, ballY, ballW, ballH, dx, dy;
+    private GestureDetector gd;
 
     public MyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,7 +39,27 @@ public class MyView extends View {
         res = context.getResources();
         matrix = new Matrix();
         timer = new Timer();
+
+        gd = new GestureDetector(context, new MyGDListener());
+
     }
+
+    private class MyGDListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            //Log.d("brad", "onDown");
+            return true; //super.onDown(e);
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d("brad", "onFling:" + velocityX + "x" + velocityY);
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+
+
 
     Timer getTimer(){return timer;}
     private void init(){
@@ -109,7 +132,8 @@ public class MyView extends View {
         }else if (event.getAction() == MotionEvent.ACTION_MOVE){
             doTouchMove(ex, ey);
         }
-        return true;
+        //return true;
+        return gd.onTouchEvent(event);
     }
 
     private void doTouchDown(float x, float y){
